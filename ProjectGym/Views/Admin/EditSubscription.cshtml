@@ -1,0 +1,64 @@
+﻿@model Gym_DataBase.ViewModel.SubscriptionViewModel
+
+@{
+    ViewData["Title"] = "Create Member";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Basic Form</h6>
+            <form asp-action="EditSubscription" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="PlanName" class="form-label">PlanName</label>
+                            <input asp-for=PlanName type="text" class="form-control" id="eUsername" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="PlanName" id="elUsername" class="text-danger"></span>
+                            <input type="hidden" asp-for="SubscriptionId" />
+                            <input type="hidden" asp-for="UserID" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="StartDate" class="form-label">StartDate</label>
+                            <input asp-for="StartDate" type="date" class="form-control" id="eEmail" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="StartDate" id="elEmail" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="EndDate" class="form-label">EndDate</label>
+                            <input asp-for="EndDate" type="date" class="form-control" id="eMobileNo" onblur="validateFields()">
+                            <span asp-validation-for="EndDate" id="elMobileNo" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 form-check">
+                            <input asp-for="PaymentStatus" class="form-check-input" type="checkbox">
+                            <label asp-for="PaymentStatus" class="form-check-label">Payment Status</label>
+                            <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+               
+                <button type="submit" asp-conProfilePicturePathtroller="Member" class="btn btn-primary">Save</button>
+                <a asp-action="ManageSubscriptions" asp-controller="Admin" class="btn btn-primary">Back To List</a>
+            </form>
+        </div>
+    </div>
+</div>

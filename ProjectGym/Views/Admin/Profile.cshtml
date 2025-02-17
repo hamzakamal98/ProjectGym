@@ -1,0 +1,58 @@
+﻿@model Gym_DataBase.ViewModel.UserViewModel
+
+@{
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h2>Profile</h2>
+            <form method="post" asp-action="Profile" asp-controller="Admin" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ProfilePicture" class="form-label">Image</label>
+                        <input asp-for="ProfilePicture" type="file" id="ProfilePicture" class="form-control" />
+                        <img id="previewImage" src="@Model.ProfilePicturePath" class="rounded-circle mt-3" width="100" height="100" />
+                        <input type="hidden" asp-for="UserID" value="@ViewBag.UserId"/>
+                        <input type="hidden" asp-for="ProfilePicturePath" value="@Model.ProfilePicturePath" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="UserName" class="form-label">UserName</label>
+                        <input type="text" class="form-control" asp-for="Username" id="UserName" name="UserName" value="@Model.Username" />
+                        <span asp-validation-for="Username" id="lUsername" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="MobileNo" class="form-label">MobileNo</label>
+                        <input type="text" class="form-control" id="MobileNo" asp-for="MobileNo" name="MobileNo" value="@Model.MobileNo" />
+                        <span asp-validation-for="MobileNo" id="lUsername" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="Email" name="Email" asp-for="Email" value="@Model.Email" />
+                        <span asp-validation-for="Username" id="lUsername" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">EditProfile</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    document.getElementById("ProfilePicture").addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("previewImage").src = e.target.result; 
+            };
+            reader.readAsDataURL(file); 
+        }
+    });
+
+</script>

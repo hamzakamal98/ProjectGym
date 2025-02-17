@@ -1,0 +1,18 @@
+﻿@model Gym_DataBase.Models.Users
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete User?@ViewBag.UserName</h3>
+
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="UserID" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="List" asp-controller="Member" class="btn btn-primary">Back To List</a>
+</form>
+

@@ -1,0 +1,57 @@
+﻿@model Gym_DataBase.ViewModel.TrainerViewModel
+
+@{
+    ViewData["Title"] = "Create Member";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Basic Form</h6>
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Username</label>
+                            <input asp-for=Username readonly type="text" class="form-control"
+                                   aria-describedby="emailHelp">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" readonly type="email" class="form-control"
+                                   aria-describedby="emailHelp">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MobileNo" class="form-label">MobileNo</label>
+                            <input asp-for="MobileNo" readonly type="text" class="form-control">
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="RegistrationDate" class="form-label">RegistrationDate</label>
+                            <input asp-for="RegistrationDate" readonly type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Current Profile Picture</label>
+                            <img id="previewImage" src="@Model.ProfilePicturePath" alt="..." class="img-fluid rounded-circle mx-auto mb-4 "
+                                 style="width: 100px; height: 100px;" />
+                        </div>
+                    </div>
+                </div>
+                <a asp-action="List" asp-controller="Trainer" class="btn btn-primary">Back To List</a>
+            </form>
+        </div>
+    </div>
+</div>

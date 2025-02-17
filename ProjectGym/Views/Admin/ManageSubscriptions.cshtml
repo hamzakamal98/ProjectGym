@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Gym_DataBase.Models.Subscriptions>
+
+@{
+    ViewData["Title"] = "ManageSubscriptions";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-md-12">
+            <div class="bg-secondary text-white rounded p-4 mb-4">
+                <h5 class="mb-3"><i class="fa fa-calendar-alt me-2"></i>Search Subscriptions</h5>
+                <form method="get" asp-action="ManageSubscriptions" asp-controller="Admin">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa fa-calendar me-2"></i>StartDate</label>
+                                <input type="date" class="form-control form-control-lg" name="startDate" id="StartDate" value="@Context.Request.Query["startDate"]">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label"><i class="fa fa-calendar me-2"></i>EndDate</label>
+                                <input type="date" class="form-control form-control-lg" name="endDate" id="EndDate" value="@Context.Request.Query["endDate"]">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">
+                        <i class="fa fa-search me-2"></i> Search
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <table class="table table-bordered text-white">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PlanName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PaymentStatus)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Users)
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PlanName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @if (item.PaymentStatus == true)
+                                    {
+                                        <span class="badge bg-success">Subscribed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Unsubscribed</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Users.UserName)
+                                </td>
+                                <td>
+                                    <a asp-action="EditSubscription" asp-controller="Admin" asp-route-SubID="@item.SubscriptionId" class="btn btn-success">Edit</a>
+                                    <a asp-action="Delete" asp-route-SubID="@item.SubscriptionId" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

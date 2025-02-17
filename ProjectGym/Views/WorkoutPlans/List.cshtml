@@ -1,0 +1,203 @@
+﻿@model IEnumerable<Gym_DataBase.Models.WorkoutPlans>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <a class="btn btn-primary" onclick="openModal()">Create</a>
+            <br />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PlanDetails)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Member)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Trainer)
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PlanDetails)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Member.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Trainer.UserName)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.PlanID">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.PlanID">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.PlanID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addPlanModal" tabindex="-1" aria-labelledby="addPlanModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPlanModalLabel">Add Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">PlanDetails</label>
+                                <input type="text" class="form-control" id="PlanDetails" onblur="validatePlan()" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">StartDate</label>
+                                <input type="date" class="form-control" id="StartDate" onblur="validatePlan()">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">EndDate</label>
+                                <input type="date" class="form-control" id="EndDate" onblur="validatePlan()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" >
+                       Select Member 
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        @foreach (var item in ViewBag.Member)
+                        {
+                            <li>
+                                <label class="dropdown-item">
+                                    <input type="checkbox" class="form-check-input member-checkbox" data-name="@item.Text" value="@item.Value">
+                                    @item.Text
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <input type="text" id="selectedUsers" class="form-control mt-2" placeholder="Selected" readonly>
+                <input type="hidden" id="selectedUserIds">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button type="button" class="btn btn-primary" onclick="savePlan()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.member-checkbox').on('change', function () {
+            var selectedNames = []; 
+            var selectedIds = [];  
+
+            $('.member-checkbox:checked').each(function () {
+                selectedIds.push($(this).val()); 
+                selectedNames.push($(this).data('name')); 
+            });
+            $('#selectedUsers').val(selectedNames.join(', ')); 
+            $('#selectedUserIds').val(selectedIds.join(',')); 
+
+        });
+    });
+
+    function openModal() {
+        debugger
+        var modal = new bootstrap.Modal(document.getElementById('addPlanModal'));
+        modal.show();
+    }
+
+    function savePlan() {
+        debugger
+        var planDetails = document.getElementById("PlanDetails").value;
+        var startDate = document.getElementById("StartDate").value;
+        var endDate = document.getElementById("EndDate").value;
+
+        var selectedUserIds = $('#selectedUserIds').val().split(',');
+    
+        if (!planDetails || !startDate || !endDate || selectedUsers.length === 0) {
+            alert("يرجى ملء جميع الحقول واختيار المستخدمين.");
+            return;
+        }
+        
+        var workoutPlansList = selectedUserIds.map(function (userId) {
+            return {
+                PlanDetails: planDetails,
+                StartDate: startDate,
+                EndDate: endDate,
+                MemberId: userId
+            };
+        });
+
+        $.ajax({
+            url: '/WorkoutPlans/Create',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(workoutPlansList),
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    location.reload(); 
+                } else {
+                    alert("فشل في إضافة الخطة: " + response.message);
+                }
+            },
+            error: function () {
+                alert("حدث خطأ في الاتصال بالخادم.");
+            }
+        });
+
+        var modal = new bootstrap.Modal(document.getElementById('addPlanModal'));
+        modal.hide();
+    }
+
+
+
+</script>

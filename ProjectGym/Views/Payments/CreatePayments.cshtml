@@ -1,0 +1,115 @@
+﻿@model Gym_DataBase.Models.Payments
+@{
+    Layout = null;
+    var data = ViewBag.Subscriptions;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Form</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <style>
+
+        body {
+            background-size: cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            background-color: darksalmon;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4" style="width: 40rem;">
+            <h4 class="text-center mb-4">Gym Membership Form</h4>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="Ammount">Ammount</label>
+                    <input  type="text" class="form-control" id="Ammount" placeholder="Ammount">
+                    <span class="text-danger" id="lAmmount"></span>
+                    <input type="hidden" asp-for="SubscriptionId" value="@ViewBag.Id" id="SubscriptionId" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="PaymentDate" >PaymentDate</label>
+                    <input type="date" class="form-control" id="PaymentDate">
+                    <span class="text-danger" id="lPaymentDate"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputState">payment method</label>
+                    <select id="ddlpaymentMethod" class="form-control">
+                        <option value="0" selected>Choose...</option>
+                        <option>Credit Card</option>
+                        <option>PayPal</option>
+                        <option>cash</option>
+                        <option>Bank transfer</option>
+                    </select>
+                    <span id="lddlpaymentMethod" class="text-danger"></span>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="AddPayment()">Create</button>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="~/js/payment.js"></script>
+<script>
+
+    function AddPayment() {
+        debugger
+
+        let isValid = true;
+
+        if (!$('#Ammount').val()) {
+            $('#lAmmount').html('This field is required.');
+            $('#lAmmount').css('display', 'block');
+            $('#Ammount').focus();
+            isValid = false;
+            return;
+        }
+        else {
+            $('#lAmmount').css('display', 'none');
+        }
+        if (!$('#PaymentDate').val()) {
+            $('#lPaymentDate').html('This field is required.');
+            $('#lPaymentDate').css('display', 'block');
+            $('#PaymentDate').focus();
+            isValid = false;
+            return;
+        }
+        else {
+            $('#lPaymentDate').css('display', 'none');
+        }
+        if ($('#ddlpaymentMethod').val() == 0 ) {
+            $('#lddlpaymentMethod').html('This field is required.');
+            $('#lddlpaymentMethod').css('display', 'block');
+            $('#ddlpaymentMethod').focus();
+            isValid = false;
+            return;
+        }
+        else {
+            $('#lddlpaymentMethod').css('display', 'none');
+        }
+
+        if (isValid) {
+            CreatePaymentsDb();
+        }
+
+    }
+
+
+</script>

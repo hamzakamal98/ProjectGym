@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Gym_DataBase.Models.Testimonials>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <table class="table  table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Content)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SubmissionDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.UserName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ApprovalStatus)
+                        </th>
+                        <th>
+                            Approve or reject
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Content)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SubmissionDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserName)
+                            </td>
+                            <td>
+                                @if (item.ApprovalStatus == -1)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge bg-warning me-2">Pending</span>
+                                    </div>
+                                }
+                                else if (item.ApprovalStatus == 1)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge bg-success">Approved</span>
+
+                                    </div>
+                                }
+                                else if (item.ApprovalStatus == 2)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge bg-danger">Rejected</span>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (item.ApprovalStatus == -1)
+                                {
+                                    <button class="btn btn-success btn-sm me-1" onclick="ATestimonial(@item.TestimonialID, 'Approve')">Approve</button>
+                                    <button class="btn btn-danger btn-sm" onclick="ATestimonial(@item.TestimonialID, 'Reject')">Reject</button>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ATestimonial(TestimonialID, value) {
+
+        debugger
+        $.ajax({
+            url: '/Admin/ApproveTestimonial',
+            method: 'POST',
+            data: { TestimonialID: TestimonialID, value: value },
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+
+
+</script>

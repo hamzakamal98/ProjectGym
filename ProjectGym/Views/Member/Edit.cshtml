@@ -1,0 +1,140 @@
+﻿@model Gym_DataBase.ViewModel.MemberViewModel
+
+@{
+    ViewData["Title"] = "Create Member";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Basic Form</h6>
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Username"  class="form-label">Username</label>
+                            <input asp-for=Username readonly type="text" class="form-control" id="eUsername" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="Username" id="elUsername" class="text-danger"></span>
+                            <input type="hidden" asp-for="UserID" />
+                            <input type="hidden" asp-for="Password" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" id="eEmail" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="Email" id="elEmail" class="text-danger"></span>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MobileNo" class="form-label">MobileNo</label>
+                            <input asp-for="MobileNo" type="text" class="form-control" id="eMobileNo" onblur="validateFields()">
+                            <span asp-validation-for="MobileNo" id="elMobileNo" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="RegistrationDate" class="form-label">RegistrationDate</label>
+                            <input asp-for="RegistrationDate" type="date" class="form-control" id="eRegistrationDate" onblur="validateFields()">
+                            <span asp-validation-for="RegistrationDate" id="elRegistrationDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                   
+                    <div class="col-md-6">
+
+                        @if (!string.IsNullOrEmpty(Model.ProfilePicturePath))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Current Profile Picture</label>
+                                <img id="previewImage" src="@Model.ProfilePicturePath" alt="..." class="img-fluid rounded-circle mx-auto mb-4 "
+                                     style="width: 100px; height: 100px;" />
+                            </div>
+                        }
+
+                        <input type="hidden" asp-for="ProfilePicturePath" value="@Model.ProfilePicturePath" />
+
+                        <div class="mb-3">
+                            <label asp-for="ProfilePicture" class="form-label">Change Profile Picture</label>
+                            <input asp-for="ProfilePicture" type="file" id="ProfilePicture" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="submit" asp-action="Edit" asp-conProfilePicturePathtroller="Member" class="btn btn-primary">Save</button>
+                <a asp-action="List" asp-controller="Member" class="btn btn-primary">Back To List</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    document.getElementById("ProfilePicture").addEventListener("change", function (event) {
+        var file = event.target.files[0]; 
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("previewImage").src = e.target.result; 
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+    function validateFields() {
+        debugger
+        var UserName = $('#eUsername').val();
+        var Email = $('#eEmail').val();
+        var MobileNo = $('#eMobileNo').val();
+        var RegistrationDate = $('#eRegistrationDate').val();
+
+        if (UserName.trim() !== "") {
+            $('#elUsername').hide();
+        }
+        else {
+            $('#elUsername').show();
+        }
+
+        if (Email.trim() !== "") {
+            $('#elEmail').hide();
+        }
+        else {
+            $('#elEmail').show();
+        }
+
+        if (MobileNo.trim() !== "") {
+            $('#elMobileNo').hide();
+        }
+        else {
+            $('#elMobileNo').show();
+        }
+
+        if (RegistrationDate.trim() !== "") {
+            $('#elRegistrationDate').hide();
+        }
+        else {
+            $('#elRegistrationDate').show();
+        }
+    }
+
+
+</script>

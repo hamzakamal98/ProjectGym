@@ -1,0 +1,36 @@
+﻿@using Gym_DataBase.ViewModel
+@model RegisterViewModel
+
+@{
+    Layout = "/Views/Shared/_LayoutRegister.cshtml";
+}
+
+<div class="wrapper">
+    <form asp-action="Register" asp-controller="Account">
+        <h2>Register</h2>
+        <div class="input-field">
+            <input type="text" asp-for="UserName">
+            <label asp-for="UserName">Enter UserName</label>
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div class="input-field">
+            <input type="password" asp-for="Password">
+            <label asp-for="Password">Enter your Password</label>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="input-field">
+            <input type="text" asp-for="Email">
+            <label asp-for="Email">Enter your Email</label>
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="input-field">
+            <input type="text" asp-for="MobileNo">
+            <label asp-for="MobileNo">Enter your MobileNo</label>
+            <span asp-validation-for="MobileNo"></span>
+        </div>
+        <button type="submit">Register</button>
+        <div class="register">
+            <p>You Already An account? <a asp-action="Login" asp-controller="Account">Back To Login</a></p>
+        </div>
+    </form>
+</div>

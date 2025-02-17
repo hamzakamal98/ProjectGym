@@ -1,0 +1,123 @@
+﻿@model Gym_DataBase.ViewModel.TrainerViewModel
+
+@{
+    ViewData["Title"] = "Create Member";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Basic Form</h6>
+            <form asp-action="Create" asp-controller="Trainer" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Username</label>
+                            <input asp-for=Username type="text" class="form-control" id="Username" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="Username" id="lUsername" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" id="Email" onblur="validateFields()"
+                                   aria-describedby="emailHelp">
+                            <span asp-validation-for="Email" id="lEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for=Password class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" id="Password" onblur="validateFields()">
+                            <span asp-validation-for="Password" id="lPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MobileNo" class="form-label">MobileNo</label>
+                            <input asp-for="MobileNo" type="text" class="form-control" id="MobileNo" onblur="validateFields()">
+                            <span asp-validation-for="MobileNo" id="lMobileNo" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="RegistrationDate" class="form-label">RegistrationDate</label>
+                            <input asp-for="RegistrationDate" type="date" class="form-control" id="RegistrationDate" onblur="validateFields()">
+                            <span asp-validation-for="RegistrationDate" id="lRegistrationDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ProfilePicture" class="form-label">Profile Picture</label>
+                            <input asp-for="ProfilePicture" type="file" id="ProfilePicture" class="form-control" name="ProfilePicture" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" asp-action="Create" asp-controller="Trainer" class="btn btn-primary">Create</button>
+                <a asp-action="List" asp-controller="Member" class="btn btn-primary">Back To List</a>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    function validateFields() {
+        debugger
+        var UserName = $('#Username').val();
+        var Email = $('#Email').val();
+        var Password = $('#Password').val();
+        var MobileNo = $('#MobileNo').val();
+        var RegistrationDate = $('#RegistrationDate').val();
+
+        if (UserName.trim() !== "") {
+            $('#lUsername').hide();
+        }
+        else {
+            $('#lUsername').show();
+        }
+
+        if (Email.trim() !== "") {
+            $('#lEmail').hide();
+        }
+        else {
+            $('#lEmail').show();
+        }
+
+        if (Password.trim() !== "") {
+            $('#lPassword').hide();
+        }
+        else {
+            $('#lPassword').show();
+        }
+
+        if (MobileNo.trim() !== "") {
+            $('#lMobileNo').hide();
+        }
+        else {
+            $('#lMobileNo').show();
+        }
+
+        if (RegistrationDate.trim() !== "") {
+            $('#lRegistrationDate').hide();
+        }
+        else {
+            $('#lRegistrationDate').show();
+        }
+    }
+
+
+</script>

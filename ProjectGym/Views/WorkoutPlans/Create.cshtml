@@ -1,0 +1,65 @@
+﻿@model Gym_DataBase.Models.WorkoutPlans
+
+@{
+    ViewData["Title"] = "Create Member";
+    Layout = "/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<style>
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+</style>
+
+<@* div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">Basic Form</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="PlanDetails" class="form-label">PlanDetails</label>
+                        <input type="text" class="form-control" id="PlanDetails" onblur="validatePlan()" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="StartDate" class="form-label">StartDate</label>
+                        <input type="date" class="form-control" id="Email" onblur="validatePlan()">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="EndDate" class="form-label">EndDate</label>
+                            <input type="date" class="form-control" id="RegistrationDate" onblur="validatePlan()">
+                        </div>
+                    </div>
+                    <a class="btn btn-primary" onclick="openModal()">Create</a>
+                    <a asp-action="List" asp-controller="WorkoutPlans" class="btn btn-primary">Back To List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+@* 
+<div class="modal fade" id="addPlanModal" tabindex="-1" aria-labelledby="addPlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPlanModalLabel">إضافة خطة جديدة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+                <p>هل تريد حفظ الخطة الجديدة؟</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">رجوع</button>
+                <button type="button" class="btn btn-primary" onclick="savePlan()">حفظ</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+
