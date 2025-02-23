@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using ProjectGym.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -121,8 +122,17 @@ namespace WebProjectGym_API.Controllers
                 RegistrationDate = x.RegistrationDate,
 
             }).ToList();
+
+            Response response = new Response(); 
+
+            response.ResponseCode = "200 ok";
+            response.ResponseMessage = "Data Found";
+            response.DataCount = filteredMembers.Count;
+            response.Data = filteredMembers.Cast<object>().ToList();
+
             if (filteredMembers == null || !filteredMembers.Any()) return NotFound();
-            return Ok(filteredMembers);
+
+            return Ok(response);
             
         }
 
